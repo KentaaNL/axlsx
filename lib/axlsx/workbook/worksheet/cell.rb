@@ -81,7 +81,7 @@ module Axlsx
     attr_reader :type
     # @see type
     def type=(v)
-      RestrictionValidator.validate "Cell.type", [:date, :time, :float, :integer, :string, :boolean, :iso_8601], v
+      RestrictionValidator.validate "Cell.type", [:date, :time, :float, :integer, :string, :boolean, :iso_8601, :text], v
       @type=v
       self.value = @value unless @value.nil?
     end

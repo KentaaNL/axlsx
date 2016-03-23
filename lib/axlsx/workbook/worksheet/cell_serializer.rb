@@ -16,7 +16,7 @@ module Axlsx
         method = (cell.type.to_s << '_type_serialization').to_sym
         self.send(method, cell, str)
         str << '</c>'
-      end 
+      end
 
 
       # builds an xml text run based on this cells attributes.
@@ -125,6 +125,26 @@ module Axlsx
         else
           inline_string_serialization cell, str
         end
+      end
+
+      # Serializes cells that are of the type richtext
+      # @param [Cell] cell The cell that is being serialized
+      # @param [String] str The string the serialized content will be appended to.
+      # @return [String]
+      def richtext(cell, str)
+        if cell.ssti.nil?
+          inline_string_serialization cell, str
+        else
+          value_serialization 's', cell.ssti, str
+        end
+      end
+
+      # Serializes cells that are of the type text
+      # @param [Cell] cell The cell that is being serialized
+      # @param [String] str The string the serialized content will be appended to.
+      # @return [String]
+      def text(cell, str='')
+        inline_string_serialization cell, str
       end
 
       private
