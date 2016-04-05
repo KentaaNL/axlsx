@@ -104,7 +104,7 @@ module Axlsx
 
     # Indicates if the cell is good for shared string table
     def plain_string?
-      @type == :string &&         # String typed
+      (@type == :string || @type == :text) &&         # String typed
         !is_text_run? &&          # No inline styles
         !@value.nil? &&           # Not nil
         !@value.empty? &&         # Not empty
