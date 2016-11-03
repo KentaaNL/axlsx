@@ -255,7 +255,7 @@ class TestCell < Test::Unit::TestCase
     c_xml = Nokogiri::XML(@c.to_xml_string(1,1))
     assert_equal(c_xml.xpath("/c[@s=1]").size, 1)
   end
-  
+
   def test_to_xml_string_with_run
     # Actually quite a number of similar run styles
     # but the processing should be the same
@@ -278,6 +278,33 @@ class TestCell < Test::Unit::TestCase
 
   end
 
+  def test_to_xml_string_array_formula
+    p = Axlsx::Package.new
+    ws = p.workbook.add_worksheet do |sheet|
+      sheet.add_row ["{=SUM(C2:C11*D2:D11)}"]
+    end
+    doc = Nokogiri::XML(ws.to_xml_string)
+    doc.remove_namespaces!
+    assert(doc.xpath("//f[text()='SUM(C2:C11*D2:D11)']"))
+    assert(doc.xpath("//f[@t='array']"))
+    assert(doc.xpath("//f[@ref='A1']"))
+  end
+
+  def test_to_xml_string_text_formula
+    p = Axlsx::Package.new
+    ws = p.workbook.add_worksheet do |sheet|
+      sheet.add_row ["=1+1", "-1+1"], type: :text
+    end
+    doc = Nokogiri::XML(ws.to_xml_string)
+    doc.remove_namespaces!
+
+    assert(doc.xpath("//f[text()='1+1']").empty?)
+    assert(doc.xpath("//t[text()='=1+1']").any?)
+
+    assert(doc.xpath("//f[text()='1+1']").empty?)
+    assert(doc.xpath("//t[text()='-1+1']").any?)
+  end
+
   def test_font_size_with_custom_style_and_no_sz
     @c.style = @c.row.worksheet.workbook.styles.add_style :bg_color => 'FF00FF'
     sz = @c.send(:font_size)
@@ -294,17 +321,17 @@ class TestCell < Test::Unit::TestCase
     sz = @c.send(:font_size)
     assert_equal(sz, 52)
   end
-  
 
   def test_cell_with_sz
     @c.sz = 25
     assert_equal(25, @c.send(:font_size))
   end
+
   def test_to_xml
     # TODO This could use some much more stringent testing related to the xml content generated!
     @ws.add_row [Time.now, Date.today, true, 1, 1.0, "text", "=sum(A1:A2)", "2013-01-13T13:31:25.123"]
     @ws.rows.last.cells[5].u = true
-    
+
     schema = Nokogiri::XML::Schema(File.open(Axlsx::SML_XSD))
     doc = Nokogiri::XML(@ws.to_xml_string)
     errors = []
