@@ -405,7 +405,7 @@ module Axlsx
         #consumer is responsible for ensuring the iso_8601 format when specifying this type
         v
       else
-        @type = :string
+        @type ||= :text
         # TODO find a better way to do this as it accounts for 30% of
         # processing time in benchmarking...
         Axlsx::trust_input ? v.to_s : ::CGI.escapeHTML(v.to_s)

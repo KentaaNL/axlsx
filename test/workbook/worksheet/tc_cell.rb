@@ -231,6 +231,10 @@ class TestCell < Test::Unit::TestCase
     @c.value = 'plain string'
     assert_equal(@c.plain_string?, true)
 
+    @c.type = :text
+    @c.value = 'plain text'
+    assert_equal(@c.plain_string?, true)
+
     @c.value = nil
     assert_equal(@c.plain_string?, false)
 

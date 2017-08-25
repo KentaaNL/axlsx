@@ -127,27 +127,15 @@ module Axlsx
         end
       end
 
-      # Serializes cells that are of the type richtext
+      # Serializes cells that are type text
       # @param [Cell] cell The cell that is being serialized
       # @param [String] str The string the serialized content will be appended to.
       # @return [String]
-      def richtext(cell, str)
+      def text_type_serialization(cell, str='')
         if cell.ssti.nil?
           inline_string_serialization cell, str
         else
-          value_serialization 's', cell.ssti, str
-        end
-      end
-
-      # Serializes cells that are of the type text
-      # @param [Cell] cell The cell that is being serialized
-      # @param [String] str The string the serialized content will be appended to.
-      # @return [String]
-      def text(cell, str)
-        if cell.ssti.nil?
-          inline_string_serialization cell, str
-        else
-          value_serialization 's', cell.ssti, str
+          value_serialization 's', cell.ssti.to_s, str
         end
       end
 
