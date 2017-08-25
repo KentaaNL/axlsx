@@ -81,7 +81,7 @@ module Axlsx
     attr_reader :type
     # @see type
     def type=(v)
-      RestrictionValidator.validate "Cell.type", [:date, :time, :float, :integer, :string, :boolean, :iso_8601], v
+      RestrictionValidator.validate "Cell.type", [:date, :time, :float, :integer, :string, :boolean, :iso_8601, :text], v
       @type=v
       self.value = @value unless @value.nil?
     end
@@ -104,7 +104,7 @@ module Axlsx
 
     # Indicates if the cell is good for shared string table
     def plain_string?
-      @type == :string &&         # String typed
+      (@type == :string || @type == :text) &&         # String typed
         !is_text_run? &&          # No inline styles
         !@value.nil? &&           # Not nil
         !@value.empty? &&         # Not empty
@@ -405,7 +405,7 @@ module Axlsx
         #consumer is responsible for ensuring the iso_8601 format when specifying this type
         v
       else
-        @type = :string
+        @type ||= :text
         # TODO find a better way to do this as it accounts for 30% of
         # processing time in benchmarking...
         Axlsx::trust_input ? v.to_s : ::CGI.escapeHTML(v.to_s)
