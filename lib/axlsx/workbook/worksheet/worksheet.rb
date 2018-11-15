@@ -295,7 +295,7 @@ module Axlsx
     # @return [Boolean]
     # @deprecated Use SheetView#show_grid_lines= instead.
     def show_gridlines=(v)
-      warn('axlsx::DEPRECIATED: Worksheet#show_gridlines= has been depreciated. This value can be set over SheetView#show_grid_lines=.')
+      warn('axlsx::DEPRECATED: Worksheet#show_gridlines= has been deprecated. This value can be set over SheetView#show_grid_lines=.')
       Axlsx::validate_boolean v
       sheet_view.show_grid_lines = v
     end
@@ -304,7 +304,7 @@ module Axlsx
     # @return [Boolean]
     # @deprecated Use SheetView#tab_selected= instead.
     def selected=(v)
-      warn('axlsx::DEPRECIATED: Worksheet#selected= has been depreciated. This value can be set over SheetView#tab_selected=.')
+      warn('axlsx::DEPRECATED: Worksheet#selected= has been deprecated. This value can be set over SheetView#tab_selected=.')
       Axlsx::validate_boolean v
       sheet_view.tab_selected = v
     end
@@ -313,7 +313,7 @@ module Axlsx
     # @return Boolean
     # @deprecated Use SheetView#show_grid_lines instead.
     def show_gridlines
-      warn('axlsx::DEPRECIATED: Worksheet#show_gridlines has been depreciated. This value can get over SheetView#show_grid_lines.')
+      warn('axlsx::DEPRECATED: Worksheet#show_gridlines has been deprecated. This value can get over SheetView#show_grid_lines.')
       sheet_view.show_grid_lines
     end
 
@@ -323,14 +323,14 @@ module Axlsx
     # @return Boolean
     # @deprecated Use SheetView#tab_selected instead.
     def selected
-      warn('axlsx::DEPRECIATED: Worksheet#selected has been depreciated. This value can get over SheetView#tab_selected.')
+      warn('axlsx::DEPRECATED: Worksheet#selected has been deprecated. This value can get over SheetView#tab_selected.')
       sheet_view.tab_selected
     end
 
     # (see #fit_to_page)
     # @return [Boolean]
     def fit_to_page=(v)
-      warn('axlsx::DEPRECIATED: Worksheet#fit_to_page has been depreciated. This value will automatically be set for you when you use PageSetup#fit_to.')
+      warn('axlsx::DEPRECATED: Worksheet#fit_to_page has been deprecated. This value will automatically be set for you when you use PageSetup#fit_to.')
       fit_to_page?
     end
 
