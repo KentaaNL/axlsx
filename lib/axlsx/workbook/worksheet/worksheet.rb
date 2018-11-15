@@ -606,7 +606,7 @@ module Axlsx
     # Returns the cell or cells defined using excel style A1:B3 references.
     # @param [String|Integer] cell_def the string defining the cell or range of cells, or the rownumber
     # @return [Cell, Array]
-    def [] (cell_def)
+    def [](cell_def)
       return rows[cell_def] if cell_def.is_a?(Integer)
       parts = cell_def.split(':').map{ |part| name_to_cell part }
       if parts.size == 1
